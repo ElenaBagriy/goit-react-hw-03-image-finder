@@ -1,40 +1,39 @@
 import React, {Component} from "react";
 import { createPortal } from "react-dom";
-import css from './Modal.module.css'
+import css from './Modal.module.css';
+import PropTypes from "prop-types";
 
 const modalRoot = document.querySelector('#modal-root');
-let count =0;
 
-export default class Modal extends Component {
+class Modal extends Component {
 
     componentDidMount() {
-        console.log('componentDidMount');
-    
-        window.addEventListener('keydown', (e) =>{
-            if (e.code === 'Escape') {
-                count +=1; 
-                console.log(`Количество вызовов коллбек при нажатии на Escape = ${count}`);
-
-                this.props.onCloseModal();
-        }
-        });
+        window.addEventListener('keydown', this.onCloseModal);
     }
 
-    // componentWillUnmount() {
-    //     console.log('Modal componentWillUnmount');
-    // }
+    componentWillUnmount() {
+        window.removeEventListener('keydown', this.onCloseModal);
+    }
 
-    // componentDidUpdate() {
-    //     console.log('update?');
-    // }
+    onCloseModal = (e) => {
+        if (e.code === 'Escape' || e.currentTarget === e.target) {
+            this.props.onCloseModal();
+        }
+    }
 
     render() {
         return createPortal(
-            <div className={css.overlay}>
+            <div className={css.overlay} onClick={this.onCloseModal}>
                 <div className={css.modal}>
-                {this.props.children}
+                    {this.props.children}
                 </div>
             </div>, modalRoot)
     }
+};
 
-}
+Modal.propTypes = {
+    onCloseModal: PropTypes.func.isRequired,
+    children: PropTypes.node.isRequired,
+};
+
+export default Modal;

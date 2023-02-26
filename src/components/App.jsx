@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Searchbar from "./Searchbar/Searchbar";
 import ImageGallery from "./ImageGallery/ImageGallery";
-import Modal from "./Modal/Modal";
+// import Modal from "./Modal/Modal";
 import Button from "./Button/Button";
 import Loader from "./Loader/Loader";
 import Notify from "./Notify/Notify";
@@ -11,18 +11,8 @@ export class App extends Component {
     query: '',
     page: 1,
     showButton: false,
-    src : '',
-    tags: '',
     loading: false,
     notification: {},
-  }
-
-  toggleModal = (largeImageURL, tags) => {
-    this.setState({
-        src: largeImageURL, 
-        tags,
-        notification: {},
-      })
   }
 
   onSearchSubmit = (query) => {
@@ -74,7 +64,6 @@ export class App extends Component {
       >
         <Searchbar onSubmit={this.onSearchSubmit} onNotify={this.onNotify}/>
         <ImageGallery 
-        openImage={this.toggleModal} 
         query={this.state.query} 
         page={this.state.page} 
         showButton={this.showButton} 
@@ -82,7 +71,6 @@ export class App extends Component {
         onNotify={this.onNotify}
         />
         {this.state.showButton && <Button onClick={this.onLoadMore} >Load more</Button>}
-        {this.state.src && (<Modal onCloseModal={this.toggleModal}><img src={this.state.src} alt={this.state.tags} /></Modal>)}
         {this.state.loading && <Loader/>}
         {this.state.notification.type && <Notify type={this.state.notification.type} message={this.state.notification.message}/>}
       </div>

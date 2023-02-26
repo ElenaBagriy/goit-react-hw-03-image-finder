@@ -7,7 +7,6 @@ import PropTypes from "prop-types";
 class ImageGallery extends Component {
 
   static propTypes = {
-    openImage: PropTypes.func.isRequired,
     query: PropTypes.string.isRequired,
     page: PropTypes.number.isRequired,
     showButton: PropTypes.func.isRequired,
@@ -62,10 +61,11 @@ class ImageGallery extends Component {
   render() {
     return (
       <ul className={css.gallery}>
-        <ImageGalleryItem 
-          openImage={this.props.openImage}
-          pictures={this.state.pictures}
-        />
+        {this.state.pictures.length >0 && this.state.pictures.map(picture => (
+                <li key={picture.id} className={css.galleryItem}>
+                    <ImageGalleryItem picture={picture}/>
+                </li>)
+        )}
       </ul>)
   }
 };

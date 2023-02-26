@@ -18,11 +18,11 @@ export class App extends Component {
   }
 
   toggleModal = (largeImageURL, tags) => {
-    this.setState(({showModal}) => ({
+    this.setState({
         src: largeImageURL, 
         tags,
         notification: {},
-      }))
+      })
   }
 
   onSearchSubmit = (query) => {

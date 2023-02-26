@@ -25,7 +25,7 @@ class ImageGallery extends Component {
         }, []);
 
         if (loadedPictures.length === 0) {
-          return Promise.reject(new Error('Sorry, there are no images with such name'))
+          throw new Error('Sorry, there are no images with such name');
         };
 
         if (this.props.page === 1) {

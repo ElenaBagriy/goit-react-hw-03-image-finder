@@ -16,7 +16,7 @@ class Searchbar extends Component {
         e.preventDefault();
 
         if (this.state.query.trim() === '') {
-            return this.props.onNotify('error', 'Nothing to find');
+            return this.props.onNotify('error', 'Please, type something to find images');
         };
         this.props.onSubmit(this.state.query.trim());
         this.setState({query: ''});

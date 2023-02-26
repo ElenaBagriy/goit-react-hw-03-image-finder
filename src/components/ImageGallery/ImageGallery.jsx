@@ -6,6 +6,15 @@ import PropTypes from "prop-types";
 
 class ImageGallery extends Component {
 
+  static propTypes = {
+    openImage: PropTypes.func.isRequired,
+    query: PropTypes.string.isRequired,
+    page: PropTypes.number.isRequired,
+    showButton: PropTypes.func.isRequired,
+    stopSpinner: PropTypes.func.isRequired,
+    onNotify: PropTypes.func.isRequired,
+  }
+
   state= {
     pictures: [],
   }
@@ -59,15 +68,6 @@ class ImageGallery extends Component {
         />
       </ul>)
   }
-};
-
-ImageGallery.propTypes = {
-  openImage: PropTypes.func.isRequired,
-  query: PropTypes.string.isRequired,
-  page: PropTypes.number.isRequired,
-  showButton: PropTypes.func.isRequired,
-  stopSpinner: PropTypes.func.isRequired,
-  onNotify: PropTypes.func.isRequired,
 };
 
 export default ImageGallery;

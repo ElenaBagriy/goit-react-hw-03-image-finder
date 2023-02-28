@@ -45,7 +45,7 @@ export class App extends Component {
           pictures: [...prevState.pictures, ...loadedPictures],
         }));
 
-        if (this.state.page >= totalHits / 12) {
+        if (this.state.page >= Math.ceil(totalHits / 12)) {
           return this.setState({
             showButton: false,
           });
@@ -70,14 +70,13 @@ export class App extends Component {
       page: 1,
       pictures: [],
       showButton: false,
-      loading: true,
       notification: {},
     })
   }
 
   onLoadMore = () => {
     this.setState(prevState => ({
-      page: prevState.page +=1,
+      page: prevState.page +1,
     }))
   }
 

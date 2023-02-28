@@ -21,8 +21,8 @@ export class App extends Component {
     if (prevState.query !== this.state.query || prevState.page !== this.state.page) {
 
       this.setState({
-        showButton: false,
-        // loading: true,
+        // showButton: false,
+        loading: true,
         // notification: {},
       });
 

@@ -22,8 +22,8 @@ export class App extends Component {
 
       this.setState({
         showButton: false,
-        loading: true,
-        notification: {},
+        // loading: true,
+        // notification: {},
       });
 
       try {

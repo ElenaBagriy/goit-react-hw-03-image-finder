@@ -4,7 +4,8 @@ import ImageGallery from "./ImageGallery/ImageGallery";
 import { fetchImages } from "../service/api";
 import Button from "./Button/Button";
 import Loader from "./Loader/Loader";
-import Notify from "./Notify/Notify";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class App extends Component {
   state = {
@@ -13,7 +14,6 @@ export class App extends Component {
     pictures: [],
     showButton: false,
     loading: false,
-    notification: {},
   }
 
   async componentDidUpdate(_, prevState) {
@@ -21,9 +21,7 @@ export class App extends Component {
     if (prevState.query !== this.state.query || prevState.page !== this.state.page) {
 
       this.setState({
-        // showButton: false,
         loading: true,
-        // notification: {},
       });
 
       try {
@@ -38,7 +36,7 @@ export class App extends Component {
         };
 
         if (this.state.page === 1) {
-          this.onNotify(`success`, `${totalHits} images found`)
+           toast[`success`](`${totalHits} images found`)
         };
 
         this.setState(prevState => ({
@@ -55,7 +53,8 @@ export class App extends Component {
           showButton: true,
         })
       } catch (error) {
-        this.onNotify('error', error.message);
+        toast['error'] (error.message);
+
       } finally {
         this.setState({
           loading: false,
@@ -65,25 +64,24 @@ export class App extends Component {
   }
 
   onSearchSubmit = (query) => {
+
+    if (query.trim() === '') {
+      return toast['error']('Please, type something to find images');
+    };
+    
     this.setState({
       query, 
       page: 1,
       pictures: [],
       showButton: false,
-      notification: {},
     })
+
   }
 
   onLoadMore = () => {
     this.setState(prevState => ({
       page: prevState.page +1,
     }))
-  }
-
-  onNotify = (type, message) => {
-    this.setState({
-      notification: {type, message}
-    })
   }
 
   render() {
@@ -96,13 +94,20 @@ export class App extends Component {
           paddingBottom: "24px",
         }}
       >
-        <Searchbar onSubmit={this.onSearchSubmit} onNotify={this.onNotify}/>
-        {this.state.pictures.length !== 0 && <ImageGallery
-          pictures={this.state.pictures}
-        />}
+        <Searchbar onSubmit={this.onSearchSubmit}/>
+        {this.state.pictures.length !== 0 && <ImageGallery pictures={this.state.pictures}/>}
         {this.state.showButton && <Button onClick={this.onLoadMore} >Load more</Button>}
         {this.state.loading && <Loader/>}
-        {this.state.notification.type && <Notify type={this.state.notification.type} message={this.state.notification.message}/>}
+        <ToastContainer position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"></ToastContainer>
       </div>
     );
   }

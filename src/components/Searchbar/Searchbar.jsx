@@ -7,7 +7,6 @@ class Searchbar extends Component {
 
     static propTypes = {
         onSubmit: PropTypes.func.isRequired,
-        onNotify: PropTypes.func.isRequired,
     }
 
     state= {
@@ -20,10 +19,6 @@ class Searchbar extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-
-        if (this.state.query.trim() === '') {
-            return this.props.onNotify('error', 'Please, type something to find images');
-        };
         this.props.onSubmit(this.state.query.trim());
         this.setState({query: ''});
     }
